@@ -1,0 +1,15 @@
+<h1><%= @device.name %></h1>
+
+<p><strong>Description :</strong> <%= @device.description %></p>
+<p><strong>Ajouté le :</strong> <%= l(@device.created_at, format: :long) %></p>
+
+<%# Boutons d'action %>
+<%= link_to 'Retour à la liste', devices_path, class: "btn btn-light" %>
+<% if current_user.admin? || current_user.advanced? %>
+  <%= link_to 'Modifier', edit_device_path(@device), class: "btn btn-secondary" %>
+<% end %>
+<% if current_user.admin? %>
+  <%= link_to 'Supprimer', device_path(@device), 
+        data: { turbo_method: :delete, confirm: 'Confirmer la suppression ?' },
+        class: "btn btn-danger" %>
+<% end %>

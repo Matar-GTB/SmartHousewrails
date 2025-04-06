@@ -1,0 +1,6 @@
+<p>Bonjour <%= @resource.email %>,</p>
+
+<p>Merci de vous être inscrit(e) sur SmartHouse !</p>
+
+<p>Pour activer votre compte, cliquez ici :</p>
+<p><%= link_to 'Confirmer mon compte', confirmation_url(@resource, confirmation_token: @token) %></p>

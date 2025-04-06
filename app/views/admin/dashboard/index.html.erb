@@ -1,0 +1,36 @@
+<h1>Tableau de bord d'administration</h1>
+
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card text-bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Utilisateurs inscrits</h5>
+        <p class="card-text display-5"><%= @users_count %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card text-bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Objets connectés</h5>
+        <p class="card-text display-5"><%= @devices_count %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Derniers inscrits</h3>
+<ul>
+  <% @latest_users.each do |user| %>
+    <li><%= user.email %> – <%= l(user.created_at, format: :short) %></li>
+  <% end %>
+</ul>
+
+<h3>Derniers objets ajoutés</h3>
+<ul>
+  <% @latest_devices.each do |device| %>
+    <li><%= device.name %> (ajouté le <%= l(device.created_at, format: :short) %>)</li>
+  <% end %>
+</ul>
+
+<%= link_to "Gérer les utilisateurs", admin_users_path, class: "btn btn-primary mt-3" %>

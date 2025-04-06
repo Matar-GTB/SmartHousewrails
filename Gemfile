@@ -61,3 +61,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+# Gemfile (extraits)
+gem 'devise'          # Gem d'authentification flexible
+gem 'devise-i18n'     # Traductions I18n pour Devise (inclut le français)
+gem 'rails-i18n'      # Traductions I18n pour Rails (messages d’erreur en français)

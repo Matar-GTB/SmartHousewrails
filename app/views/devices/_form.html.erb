@@ -1,0 +1,26 @@
+<%= form_with(model: device, local: true) do |form| %>
+  <% if device.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(device.errors.count, "erreur") %> empêchent l'enregistrement :</h4>
+      <ul>
+        <% device.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "Nom de l'objet", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Description", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 5, required: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<h1>Modifier l'utilisateur</h1>
+
+<%= form_with(model: [:admin, @user], local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :email, "Email", class: "form-label" %>
+    <%= form.text_field :email, class: "form-control", disabled: true %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :points, "Points", class: "form-label" %>
+    <%= form.number_field :points, class: "form-control" %>
+  </div>
+  <div class="mb-3 form-check">
+    <%= form.check_box :admin, class: "form-check-input" %>
+    <%= form.label :admin, "Administrateur ?", class: "form-check-label" %>
+  </div>
+  <%= form.submit "Enregistrer", class: "btn btn-primary" %>
+  <%= link_to 'Annuler', admin_users_path, class: "btn btn-link" %>
+<% end %>

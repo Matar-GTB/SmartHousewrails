@@ -1,0 +1,42 @@
+<h1>Liste des objets connectés</h1>
+
+<% if @devices.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nom de l'objet</th>
+        <th>Description</th>
+        <th>Date d'ajout</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+        <td><%= link_to device.name, device_path(device) %></td>
+        <td><%= device.description.truncate(50) %></td>
+        <td><%= l(device.created_at, format: :short) %></td>
+        <td>
+          <%# Lien Modifier (visible pour utilisateurs avancés ou admin) %>
+          <% if current_user.admin? || current_user.advanced? %>
+            <%= link_to 'Modifier', edit_device_path(device), class: "btn btn-sm btn-secondary" %>
+          <% end %>
+          <%# Lien Supprimer (visible pour admin uniquement) %>
+          <% if current_user.admin? %>
+            <%= link_to 'Supprimer', device_path(device), 
+                  data: { turbo_method: :delete, confirm: 'Êtes-vous sûr ?' },
+                  class: "btn btn-sm btn-danger" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Aucun objet n'a encore été ajouté.</p>
+<% end %>
+
+<%# Bouton Nouvel objet - visible seulement si user avancé ou admin %>
+<% if current_user.admin? || current_user.advanced? %>
+  <%= link_to 'Ajouter un objet connecté', new_device_path, class: "btn btn-primary" %>
+<% end %>
