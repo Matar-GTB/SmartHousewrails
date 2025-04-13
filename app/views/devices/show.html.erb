@@ -25,3 +25,16 @@
         data: { turbo_method: :delete, confirm: 'Confirmer la suppression ?' },
         class: "btn btn-danger" %>
 <% end %>
+<p>
+  <strong>Statut :</strong>
+  <%= @device.status ? "Actif" : "Inactif" %>
+</p>
+<p>
+  <strong>Localisation :</strong>
+  <%= @device.location.present? ? @device.location : "-" %>
+</p>
+<p>
+  <strong>Catégorie :</strong>
+  <%= @device.category ? @device.category.name : "-" %>
+</p>
+

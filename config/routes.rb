@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
   
   resources :users, only: [:index, :show]
+  resources :services
+
 
     
 
@@ -23,23 +25,19 @@ Rails.application.routes.draw do
 
   # Module admin
   namespace :admin do
-    get "categories/index"
-    get "categories/new"
-    get "categories/edit"
-    get "categories/show"
-    get "categories/create"
-    get "categories/update"
-    get "categories/destroy"
-    get '/' => 'dashboard#index', as: :dashboard
+    resources :categories
     resources :users, only: [:index, :edit, :update, :destroy]
+    get '/' => 'dashboard#index', as: :dashboard
+  
+  
   end  # ← ce end ferme le namespace
   patch 'devices/:id/toggle', to: 'devices#toggle', as: :toggle_device
-
   
 
 
   
-  
+
+
   
 
 end  # ← ce end ferme le draw do principal

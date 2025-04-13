@@ -15,7 +15,7 @@ def index
                               "%#{params[:query]}%", "%#{params[:query]}%")
   end
   if params[:category].present?
-    @devices = @devices.where(category: params[:category])
+    @devices = @devices.where(category_id: params[:category])
   end
 end
 
@@ -77,7 +77,7 @@ end
 
     # Strong parameters: limite les attributs modifiables via formulaire
     def device_params
-      params.require(:device).permit(:name, :description)
+      params.require(:device).permit(:name, :description, :status, :location, :category_id)
     end
 
     # Autorise uniquement les utilisateurs avancés ou admin
@@ -134,6 +134,9 @@ def stats
   @devices_by_user = Device.group(:user_id).count
   # etc. toute stat calculable via ActiveRecord
 end
+# app/controllers/devices_controller.rb
+
+
 
 
 

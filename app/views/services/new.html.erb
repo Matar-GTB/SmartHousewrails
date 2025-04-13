@@ -1,0 +1,16 @@
+<%= form_with(model: @service, local: true) do |f| %>
+    <div class="mb-3">
+      <%= f.label :name, "Nom du service" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :description, "Description" %>
+      <%= f.text_area :description, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :category_id, "Catégorie" %>
+      <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "- Aucune -", class: "form-select" %>
+    </div>
+    <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+  <% end %>
+  
