@@ -20,25 +20,22 @@
     <%= form.text_area :description, class: "form-control", rows: 5, required: true %>
   </div>
 
-  <div class="actions">
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
-<% end %>
-<div class="mb-3">
-    <%= f.label :location, "Emplacement de l'objet" %>
-    <%= f.text_field :location, class: "form-control" %>
+  <div class="mb-3">
+    <%= form.label :location, "Emplacement de l'objet", class: "form-label" %>
+    <%= form.text_field :location, class: "form-control" %>
   </div>
 
   <div class="mb-3 form-check">
-    <%= f.check_box :status, class: "form-check-input" %>
-    <%= f.label :status, "Objet actif ?", class: "form-check-label" %>
-    <!-- Coche = actif (true), décoché = inactif (false) -->
+    <%= form.check_box :status, class: "form-check-input" %>
+    <%= form.label :status, "Objet actif ?", class: "form-check-label" %>
   </div>
 
   <div class="mb-3">
-    <%= f.label :category_id, "Catégorie" %>
-    <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "- Aucune -", class: "form-select" %>
+    <%= form.label :category_id, "Catégorie", class: "form-label" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "- Aucune -", class: "form-select" %>
   </div>
 
-  <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+  <div class="actions">
+    <%= form.submit "Enregistrer", class: "btn btn-primary" %>
+  </div>
 <% end %>

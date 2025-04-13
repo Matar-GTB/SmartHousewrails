@@ -54,13 +54,15 @@ end
   # PATCH/PUT /devices/1
   def update
     if @device.update(device_params)
-      # Attribuer des points pour la mise à jour (modification) d’un objet
-      current_user.increment!(:points, 5)
-      redirect_to @device, notice: "Objet connecté mis à jour."
+      unless params[:device].keys == ["status"]
+        current_user.increment!(:points, 5)
+      end
+      redirect_to devices_path, notice: "Objet connecté mis à jour."
     else
       render :edit, status: :unprocessable_entity
     end
   end
+  
 
   # DELETE /devices/1
   def destroy
@@ -118,16 +120,7 @@ def toggle_active
   end
 end
 
-def toggle
-  @device = Device.find(params[:id])
-  # Autoriser uniquement admin ou propriétaire avancé à toggler
-  if current_user.admin? || (current_user.advanced? && @device.user == current_user)
-    @device.update(status: !@device.status)
-    redirect_to devices_path, notice: (@device.status ? "Objet activé" : "Objet désactivé")
-  else
-    redirect_to devices_path, alert: "Action non autorisée."
-  end
-end
+
 
 def stats
   @total_devices = Device.count
@@ -135,6 +128,21 @@ def stats
   # etc. toute stat calculable via ActiveRecord
 end
 # app/controllers/devices_controller.rb
+def toggle
+  @device = Device.find(params[:id])
+  
+  # Autoriser uniquement l'admin ou le propriétaire avancé
+  unless current_user.admin? || (current_user.advanced? && @device.user == current_user)
+    redirect_to devices_path, alert: "Action non autorisée."
+    return
+  end
+
+  # Inverser le statut actif/inactif
+  @device.update(status: !@device.status)
+
+  redirect_to devices_path, notice: "Statut de l'objet mis à jour."
+end
+
 
 
 

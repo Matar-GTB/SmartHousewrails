@@ -1,14 +1,18 @@
-
 <%= form_with url: devices_path, method: :get, local: true do %>
-  <input type="text" name="query" placeholder="Rechercher..." value="<%= params[:query] %>"/>
-  <select name="category">
-    <option value="">-- Catégorie --</option>
-    <!-- Options de catégories d'objets -->
-    <option value="Sécurité">Sécurité</option>
-    <option value="Énergie">Énergie</option>
-    … 
-  </select>
-  <button type="submit">Filtrer</button>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= label_tag :query, "Recherche" %>
+      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Nom ou description" %>
+    </div>
+    <div class="col-md-4">
+      <%= label_tag :category, "Catégorie" %>
+      <%= select_tag :category, options_from_collection_for_select(Category.all, :id, :name, params[:category]),
+                     include_blank: "- Toutes -", class: "form-select" %>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <%= submit_tag "Filtrer", class: "btn btn-primary w-100" %>
+    </div>
+  </div>
 <% end %>
 
 <h2>Objets connectés</h2>
@@ -19,13 +23,22 @@
     <div class="card-body">
       <h5 class="card-title"><%= device.name %></h5>
       <p class="card-text"><%= device.description %></p>
-      <%= link_to 'Voir détail', device_path(device), class: "btn btn-outline-primary btn-sm" %>
+      <p class="card-text"><strong>Catégorie :</strong> <%= device.category&.name || "-" %></p>
+      <p class="card-text"><strong>Statut :</strong> <%= device.status ? "Actif" : "Inactif" %></p>
+
+      <% if user_signed_in? %>
+  <%= link_to 'Voir détail', device_path(device), class: "btn btn-outline-primary btn-sm" %>
+<% end %>
+
+
+      <% if current_user && (current_user.admin? || current_user.advanced?) %>
+  <%= button_to (device.status ? 'Désactiver' : 'Activer'),
+        device_path(device),
+        method: :patch,
+        params: { device: { status: !device.status } },
+        class: "btn btn-sm #{device.status ? 'btn-warning' : 'btn-success'}" %>
+<% end %>
+
     </div>
   </div>
 <% end %>
-<% if current_user.admin? || current_user.advanced? %>
-  <%= button_to (@device.status ? 'Désactiver' : 'Activer'),
-        toggle_device_path(device), method: :patch, 
-        class: "btn btn-sm <%= @device.status ? 'btn-warning' : 'btn-success' %>" %>
-<% end %>
-

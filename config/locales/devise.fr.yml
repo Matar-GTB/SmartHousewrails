@@ -1,0 +1,15 @@
+fr:
+  devise:
+    failure:
+      unapproved_account: "Votre compte n'est pas encore approuvé par l'administrateur."
+      user:
+        unapproved_account: "Votre compte n'est pas encore approuvé par l'administrateur."
+
+
+fr:
+  devise:
+    registrations:
+      signed_up_but_unapproved_account: "Votre compte a été créé mais doit encore être approuvé par un administrateur."
+    failure:
+      unapproved_account: "Votre compte n'est pas encore approuvé par l'administrateur."
+

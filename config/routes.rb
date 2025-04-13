@@ -3,12 +3,13 @@ Rails.application.routes.draw do
   # new_user_registration_path, new_user_session_path, etc.
   devise_for :users
 
-  # Vos autres ressources déjà présentes
   resources :devices do
     member do
       post :request_deletion
+      patch :toggle  # ← Ajout ici !
     end
   end
+  
   
   resources :users, only: [:index, :show]
   resources :services
@@ -29,6 +30,5 @@ Rails.application.routes.draw do
     get '/' => 'dashboard#index', as: :dashboard
   end  # fin du namespace admin
 
-  patch 'devices/:id/toggle', to: 'devices#toggle', as: :toggle_device
 
 end
