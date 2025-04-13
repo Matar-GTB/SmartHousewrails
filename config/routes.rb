@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  # Active les routes Devise pour User, ce qui va générer notamment :
+  # new_user_registration_path, new_user_session_path, etc.
+  devise_for :users
+
+  # Vos autres ressources déjà présentes
   resources :devices do
     member do
       post :request_deletion
@@ -7,12 +12,6 @@ Rails.application.routes.draw do
   
   resources :users, only: [:index, :show]
   resources :services
-
-
-    
-
-  
-
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
@@ -28,16 +27,8 @@ Rails.application.routes.draw do
     resources :categories
     resources :users, only: [:index, :edit, :update, :destroy]
     get '/' => 'dashboard#index', as: :dashboard
-  
-  
-  end  # ← ce end ferme le namespace
+  end  # fin du namespace admin
+
   patch 'devices/:id/toggle', to: 'devices#toggle', as: :toggle_device
-  
 
-
-  
-
-
-  
-
-end  # ← ce end ferme le draw do principal
+end
