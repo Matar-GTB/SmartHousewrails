@@ -1,4 +1,10 @@
 class ApplicationController < ActionController::Base
+  include Devise::Controllers::Helpers
+  # Exposer les méthodes Devise aux vues
+  helper_method :current_user, :user_signed_in?, :user_session
+
+  
+
   
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -12,5 +18,5 @@ class ApplicationController < ActionController::Base
     current_user.increment!(:points, 1) if resource.is_a?(User)
     super(resource)  # redirige vers le chemin par défaut (root_path)
   end
-  helper_method :user_signed_in?, :current_user, :user_session
+  
 end
