@@ -1,0 +1,21 @@
+<h1>Gestion des Catégories</h1>
+<%= link_to "Nouvelle Catégorie", new_admin_category_path, class: "btn btn-primary" %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td>
+          <%= link_to "Editer", edit_admin_category_path(category), class: "btn btn-sm btn-warning" %>
+          <%= link_to "Supprimer", admin_category_path(category), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

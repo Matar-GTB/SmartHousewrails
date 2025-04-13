@@ -7,6 +7,10 @@ class Admin::UsersController < ApplicationController
   # GET /admin/users
   def index
     @users = User.all.order(created_at: :asc)
+    respond_to do |format|
+      format.html
+      format.csv { send_data @users.to_csv, filename: "users.csv" }
+    end
   end
 
   # GET /admin/users/:id/edit
@@ -46,4 +50,26 @@ class Admin::UsersController < ApplicationController
       # On ne permet à l'admin de modifier que certains champs du user
       params.require(:user).permit(:points, :admin)
     end
+    # app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  before_action :authenticate_user!
+  def index
+    @users = User.all
+  end
+  def show
+    @user = User.find(params[:id])
+  end
 end
+private
+
+def admin_user_params
+  params.require(:user).permit(:points, :admin, :approved)
+end
+
+  
+  
+
+      
+    
+end
+

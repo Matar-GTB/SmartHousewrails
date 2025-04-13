@@ -1,0 +1,9 @@
+<h1>Profil de <%= @user.username %></h1>
+<p><strong>Age :</strong> <%= @user.age %> ans</p>
+<p><strong>Genre :</strong> <%= @user.gender %></p>
+<p><strong>Statut :</strong> <%= @user.member_type %></p>
+<%# Affichage de la partie privée si c'est le proprio ou un admin : %>
+<% if current_user == @user || current_user.admin? %>
+  <p><strong>Nom :</strong> <%= @user.last_name %></p>
+  <p><strong>Prénom :</strong> <%= @user.first_name %></p>
+<% end %>

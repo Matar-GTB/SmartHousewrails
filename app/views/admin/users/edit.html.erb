@@ -1,18 +1,33 @@
-<h1>Modifier l'utilisateur</h1>
 
-<%= form_with(model: [:admin, @user], local: true) do |form| %>
+<h2>Modifier l’utilisateur <%= @user.email %></h2>
+<%= form_with(model: @user, url: admin_user_path(@user), method: :patch, local: true) do |f| %>
   <div class="mb-3">
-    <%= form.label :email, "Email", class: "form-label" %>
-    <%= form.text_field :email, class: "form-control", disabled: true %>
-  </div>
-  <div class="mb-3">
-    <%= form.label :points, "Points", class: "form-label" %>
-    <%= form.number_field :points, class: "form-control" %>
+    <%= f.label :points, "Points accumulés" %>
+    <%= f.number_field :points, class: "form-control" %>
   </div>
   <div class="mb-3 form-check">
-    <%= form.check_box :admin, class: "form-check-input" %>
-    <%= form.label :admin, "Administrateur ?", class: "form-check-label" %>
+    <%= f.check_box :admin, class: "form-check-input" %>
+    <%= f.label :admin, "Droits administrateur", class: "form-check-label" %>
   </div>
-  <%= form.submit "Enregistrer", class: "btn btn-primary" %>
-  <%= link_to 'Annuler', admin_users_path, class: "btn btn-link" %>
+  <%= f.submit "Enregistrer", class: "btn btn-primary" %>
 <% end %>
+<%= form_with model: @user, url: admin_user_path(@user), method: :put, local: true do |f| %>
+  <!-- Exemples de champs existants, par exemple pour points et admin -->
+  <div class="field">
+    <%= f.label :points %>
+    <%= f.number_field :points, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :admin %>
+    <%= f.check_box :admin %>
+  </div>
+  <!-- Nouveau champ pour l'approbation -->
+  <div class="field">
+    <%= f.label :approved, "Compte approuvé" %>
+    <%= f.check_box :approved %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Mettre à jour", class: "btn btn-primary" %>
+  </div>
+<% end %>
+

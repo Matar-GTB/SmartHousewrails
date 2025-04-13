@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
-  resources :devices
-  devise_for :users
+  resources :devices do
+    member do
+      post :request_deletion
+    end
+  end
+  
+  resources :users, only: [:index, :show]
+
+    
+
+  
+
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
@@ -13,8 +23,23 @@ Rails.application.routes.draw do
 
   # Module admin
   namespace :admin do
+    get "categories/index"
+    get "categories/new"
+    get "categories/edit"
+    get "categories/show"
+    get "categories/create"
+    get "categories/update"
+    get "categories/destroy"
     get '/' => 'dashboard#index', as: :dashboard
     resources :users, only: [:index, :edit, :update, :destroy]
   end  # ← ce end ferme le namespace
+  patch 'devices/:id/toggle', to: 'devices#toggle', as: :toggle_device
+
+  
+
+
+  
+  
+  
 
 end  # ← ce end ferme le draw do principal

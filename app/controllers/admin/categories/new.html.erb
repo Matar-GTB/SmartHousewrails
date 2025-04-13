@@ -1,0 +1,10 @@
+<h1>Nouvelle Catégorie</h1>
+<%= form_with model: [:admin, @category], local: true do |f| %>
+  <div class="field">
+    <%= f.label :name, "Nom de la catégorie" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Créer la catégorie", class: "btn btn-primary" %>
+  </div>
+<% end %>

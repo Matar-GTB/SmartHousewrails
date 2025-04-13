@@ -10,4 +10,7 @@ class StaticPagesController < ApplicationController
 
   def legal
   end
+  def goodbye
+    # Par exemple, affiche un message de déconnexion
+  end
 end

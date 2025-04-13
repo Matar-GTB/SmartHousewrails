@@ -3,6 +3,18 @@
 <p><strong>Description :</strong> <%= @device.description %></p>
 <p><strong>Ajouté le :</strong> <%= l(@device.created_at, format: :long) %></p>
 
+<!-- Bloc de demande de suppression pour les utilisateurs avancés (non admins) -->
+<% if current_user.advanced? && !current_user.admin? %>
+  <% if @device.deletion_requested? %>
+    <p class="text-warning">Suppression en attente de validation par l’administrateur.</p>
+  <% else %>
+    <%= button_to "Demander la suppression", 
+          request_deletion_device_path(@device), 
+          data: { confirm: "Confirmer la demande de suppression ?" }, 
+          class: "btn btn-outline-danger" %>
+  <% end %>
+<% end %>
+
 <%# Boutons d'action %>
 <%= link_to 'Retour à la liste', devices_path, class: "btn btn-light" %>
 <% if current_user.admin? || current_user.advanced? %>

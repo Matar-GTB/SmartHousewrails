@@ -1,3 +1,38 @@
+<!-- app/views/static_pages/home.html.erb -->
 <h1>Bienvenue sur SmartHouse</h1>
-<p>SmartHouse est une application web de gestion d’objets connectés.</p>
-<p>Inscrivez-vous pour gérer vos objets intelligents et gagner des points !</p>
+<p>SmartHouse est une plateforme web de maison intelligente.</p>
+
+<!-- Free tour: carousel highlight -->
+<div id="tourCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <h5>Gestion des objets connectés</h5>
+      <p>Ajoutez et gérez vos appareils IoT facilement depuis l’application.</p>
+    </div>
+    <div class="carousel-item">
+      <h5>Visualisation des données</h5>
+      <p>Consultez en temps réel l’état de vos capteurs et consommations.</p>
+    </div>
+    <div class="carousel-item">
+      <h5>Gagnez des points</h5>
+      <p>Utilisez la plateforme et progressez de Débutant à Avancé pour débloquer plus de modules.</p>
+    </div>
+  </div>
+  <!-- Contrôles du carousel (omitting for brevity) -->
+</div>
+
+<!-- Search form with two filters: name and description -->
+<h3>Rechercher un objet connecté</h3>
+<%= form_with url: devices_path, method: :get, local: true do |f| %>
+  <div class="row mb-3">
+    <div class="col">
+      <%= f.label :name, "Nom de l’objet" %>
+      <%= text_field_tag :name_query, params[:name_query], class: "form-control" %>
+    </div>
+    <div class="col">
+      <%= f.label :desc, "Description contient" %>
+      <%= text_field_tag :desc_query, params[:desc_query], class: "form-control" %>
+    </div>
+  </div>
+  <%= f.submit "Rechercher", class: "btn btn-primary" %>
+<% end %>
