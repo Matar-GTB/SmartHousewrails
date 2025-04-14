@@ -22,10 +22,12 @@ end
 
   # GET /devices/1
   def show
-    # ... @device est déjà chargé
-    if current_user && !current_user.admin?
-      current_user.increment!(:points, 1)  # +1 point par consultation
+    def show
+      if current_user&.advanced?
+        current_user.increment!(:points, 2)
+      end
     end
+    
   end
 
   # GET /devices/new
@@ -79,7 +81,7 @@ end
 
     # Strong parameters: limite les attributs modifiables via formulaire
     def device_params
-      params.require(:device).permit(:name, :description, :status, :location, :category_id)
+      params.require(:device).permit(:name, :description, :status, :location, :category_id, :deletion_requested)
     end
 
     # Autorise uniquement les utilisateurs avancés ou admin
@@ -98,15 +100,8 @@ end
     # app/controllers/devices_controller.rb
 
 
-  def request_deletion
-    @device = Device.find(params[:id])
-    if current_user.admin? || current_user.advanced?
-      @device.update(deletion_requested: true)
-      redirect_to devices_path, notice: "Demande de suppression envoyée pour « #{@device.name} »."
-    else
-      redirect_to devices_path, alert: "Action non autorisée."
-    end
-  end
+    
+    
   # app/controllers/devices_controller.rb
 def toggle_active
   @device = Device.find(params[:id])
@@ -142,6 +137,18 @@ def toggle
 
   redirect_to devices_path, notice: "Statut de l'objet mis à jour."
 end
+
+def request_deletion
+  @device = Device.find(params[:id])
+
+  if current_user&.advanced? && !current_user.admin?
+    @device.update(deletion_requested: true)
+    redirect_to devices_path, notice: "Demande de suppression envoyée pour « #{@device.name} »."
+  else
+    redirect_to devices_path, alert: "Action non autorisée."
+  end
+end
+
 
 
 

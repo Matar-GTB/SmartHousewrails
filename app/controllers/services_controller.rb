@@ -6,7 +6,15 @@ class ServicesController < ApplicationController
   
     def index
       @services = Service.all
-      # éventuels filtres analogues à devices
+      # Filtre par mot-clé
+  if params[:query].present?
+    @services = @services.where("name LIKE ? OR description LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+  end
+
+  # Filtre par catégorie
+  if params[:category].present?
+    @services = @services.where(category_id: params[:category])
+  end
     end
   
     def show; end

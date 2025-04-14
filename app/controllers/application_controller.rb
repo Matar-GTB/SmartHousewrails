@@ -25,13 +25,18 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [
-      :username, :age, :gender, :birthdate, :member_type, :first_name, :last_name
-    ])
+    extra_keys = [:username, :age, :gender, :birthdate, :member_type, :first_name, :last_name]
+    devise_parameter_sanitizer.permit(:sign_up, keys: extra_keys)
+    devise_parameter_sanitizer.permit(:account_update, keys: extra_keys)
   end
+  
 
   # Redirections après connexion/déconnexion (personnalisables)
   def after_sign_in_path_for(resource)
+    # Ajouter 1 point à chaque connexion
+  if resource.is_a?(User)
+    resource.increment!(:points, 1)
+  end
     resource.admin? ? admin_dashboard_path : root_path
   end
 

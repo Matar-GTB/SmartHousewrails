@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_13_202936) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_14_015037) do
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -31,6 +31,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_13_202936) do
     t.index ["user_id"], name: "index_devices_on_user_id"
   end
 
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "user_id", null: false
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_services_on_category_id"
+    t.index ["user_id"], name: "index_services_on_user_id"
+  end
+
   create_table "smart_services", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -48,6 +59,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_13_202936) do
 
   add_foreign_key "devices", "categories"
   add_foreign_key "devices", "users"
+  add_foreign_key "services", "categories"
+  add_foreign_key "services", "users"
   add_foreign_key "smart_services", "categories"
   add_foreign_key "smart_services", "users"
 end

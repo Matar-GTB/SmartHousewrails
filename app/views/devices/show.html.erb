@@ -6,16 +6,7 @@
 <p><strong>Localisation :</strong> <%= @device.location.presence || "-" %></p>
 <p><strong>Catégorie :</strong> <%= @device.category&.name || "-" %></p>
 
-<% if current_user && current_user.advanced? && !current_user.admin? %>
-  <% if @device.deletion_requested? %>
-    <p class="text-warning">Suppression en attente de validation par l’administrateur.</p>
-  <% else %>
-    <%= button_to "Demander la suppression",
-          request_deletion_device_path(@device),
-          data: { confirm: "Confirmer la demande de suppression ?" },
-          class: "btn btn-outline-danger mb-3" %>
-  <% end %>
-<% end %>
+
 
 <%= link_to 'Retour à la liste', devices_path, class: "btn btn-light me-2" %>
 
@@ -28,3 +19,8 @@
         data: { turbo_method: :delete, confirm: 'Confirmer la suppression ?' },
         class: "btn btn-danger" %>
 <% end %>
+<p>
+  <strong>Suppression demandée :</strong>
+  <%= @device.deletion_requested? ? "Oui" : "Non" %>
+</p>
+

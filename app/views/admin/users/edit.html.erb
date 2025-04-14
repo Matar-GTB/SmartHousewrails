@@ -14,6 +14,11 @@
 <%= form_with model: @user, url: admin_user_path(@user), method: :put, local: true do |f| %>
   <!-- Exemples de champs existants, par exemple pour points et admin -->
   <div class="field">
+  <%= f.label :approved, "Compte approuvé" %>
+  <%= f.check_box :approved %>
+</div>
+
+  <div class="field">
     <%= f.label :points %>
     <%= f.number_field :points, class: "form-control" %>
   </div>

@@ -22,6 +22,10 @@
   <div class="card mb-3">
     <div class="card-body">
       <h5 class="card-title"><%= device.name %></h5>
+      <% if device.deletion_requested? %>
+  <span class="badge bg-warning text-dark">Suppression demandée</span>
+<% end %>
+
       <p class="card-text"><%= device.description %></p>
       <p class="card-text"><strong>Catégorie :</strong> <%= device.category&.name || "-" %></p>
       <p class="card-text"><strong>Statut :</strong> <%= device.status ? "Actif" : "Inactif" %></p>

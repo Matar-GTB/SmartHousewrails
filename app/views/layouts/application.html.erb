@@ -25,10 +25,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarMain">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+
             <li class="nav-item"><%= link_to 'Accueil', root_path, class: "nav-link" %></li>
             <li class="nav-item"><%= link_to 'À Propos', about_path, class: "nav-link" %></li>
             <li class="nav-item"><%= link_to 'Contact', contact_path, class: "nav-link" %></li>
             <li class="nav-item"><%= link_to 'Mentions Légales', legal_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to 'Utilisateurs', users_path, class: "nav-link" %></li>
+
             <% if user_signed_in? %>
               <li class="nav-item"><%= link_to 'Objets connectés', devices_path, class: "nav-link" %></li>
               <% if current_user.admin? %>
@@ -48,8 +52,8 @@
               </li>
               <li class="nav-item"><%= link_to 'Profil', edit_user_registration_path, class: "nav-link" %></li>
               <li class="nav-item">
-              <%= link_to 'Déconnexion', destroy_user_session_path, method: :delete, 
-              data: { turbo_confirm: 'Voulez-vous vraiment vous déconnecter ?' } %>
+              <%= link_to 'Déconnexion', destroy_user_session_path, method: :delete, class: "nav-link", data: { turbo_confirm: 'Voulez-vous vraiment vous déconnecter ?' } %>
+
               </li>
             <% else %>
               <li class="nav-item"><%= link_to "S'inscrire", new_user_registration_path, class: "nav-link" %></li>

@@ -1,0 +1,47 @@
+<h1>Utilisateurs de la plateforme</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Nom</th>
+      <th>Type</th>
+      <th>Inscrit le</th>
+      <th>Statut</th>
+      <th>Âge</th>
+    <th>Genre</th>
+    <th>Naissance</th>
+      <% if current_user&.admin? %>
+
+        <th>Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= "#{user.first_name} #{user.last_name}" if user.respond_to?(:first_name) %></td>
+
+        <td>
+          <%= user.admin? ? "Admin" : user.advanced? ? "Avancé" : "Basique" %>
+        </td>
+        <td><%= l(user.created_at.to_date) %></td>
+        <td>
+          <% if user.approved? %>
+            <span class="badge bg-success">Approuvé</span>
+          <% else %>
+            <span class="badge bg-secondary">En attente</span>
+          <% end %>
+        </td>
+        <td><%= user.age %></td>
+<td><%= user.gender %></td>
+<td><%= user.birthdate %></td>
+
+        <% if current_user&.admin? %>
+          <td><%= link_to "Modifier", edit_admin_user_path(user), class: "btn btn-sm btn-outline-primary" %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

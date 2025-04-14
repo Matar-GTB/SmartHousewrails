@@ -1,32 +1,38 @@
-<!-- app/views/admin/users/index.html.erb -->
-<h2>Utilisateurs</h2>
-<%= link_to "Exporter CSV", admin_users_path(format: :csv), class: "btn btn-sm btn-secondary" %>
+<h1>Utilisateurs de la plateforme</h1>
 
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Email</th>
-      <th>Points</th>
-      <th>Niveau</th>
-      <th>Admin</th>
-      <th>Actions</th>
+      <th>Nom</th>
+      <th>Type</th>
+      <th>Inscrit le</th>
+      <th>Statut</th>
+      <% if current_user&.admin? %>
+        <th>Actions</th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
         <td><%= user.email %></td>
-        <td><%= user.points %></td>
-        <td><%= user.level_name %></td>
-        <td><%= user.admin? ? 'Oui' : 'Non' %></td>
+        <td><%= "#{user.first_name} #{user.last_name}" if user.respond_to?(:first_name) %></td>
+
         <td>
-          <%= link_to 'Modifier', edit_admin_user_path(user), class: "btn btn-sm btn-primary" %>
-          <% if user != current_user %>
-            <%= link_to 'Supprimer', admin_user_path(user), method: :delete, 
-                         data: { confirm: "Supprimer définitivement #{user.email} ?" },
-                         class: "btn btn-sm btn-danger" %>
+          <%= user.admin? ? "Admin" : user.advanced? ? "Avancé" : "Basique" %>
+        </td>
+        <td><%= l(user.created_at.to_date) %></td>
+        <td>
+          <% if user.approved? %>
+            <span class="badge bg-success">Approuvé</span>
+          <% else %>
+            <span class="badge bg-secondary">En attente</span>
           <% end %>
         </td>
+        <% if current_user&.admin? %>
+          <td><%= link_to "Modifier", edit_admin_user_path(user), class: "btn btn-sm btn-outline-primary" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

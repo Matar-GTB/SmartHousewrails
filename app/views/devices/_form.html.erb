@@ -1,4 +1,9 @@
 <%= form_with(model: device, local: true) do |form| %>
+  <div class="form-check mb-3">
+  <%= form.check_box :deletion_requested, class: "form-check-input" %>
+  <%= form.label :deletion_requested, "Demander la suppression", class: "form-check-label" %>
+</div>
+
   <% if device.errors.any? %>
     <div class="alert alert-danger">
       <h4><%= pluralize(device.errors.count, "erreur") %> empêchent l'enregistrement :</h4>
@@ -39,3 +44,4 @@
     <%= form.submit "Enregistrer", class: "btn btn-primary" %>
   </div>
 <% end %>
+
