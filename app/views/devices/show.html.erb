@@ -23,4 +23,34 @@
   <strong>Suppression demandée :</strong>
   <%= @device.deletion_requested? ? "Oui" : "Non" %>
 </p>
+<h3>Données techniques :</h3>
+<% if @device.device_data.any? %>
+  <ul>
+    <% @device.device_data.each do |data| %>
+      <li><strong><%= data.key %> :</strong> <%= data.value %></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p class="text-muted">Aucune donnée disponible.</p>
+<% end %>
+
+<h3>Ajouter une donnée</h3>
+
+<% if current_user && (current_user.advanced? || current_user.admin?) %>
+  <%= form_with model: [@device, DeviceDatum.new], local: true do |f| %>
+    <div class="mb-3">
+      <%= f.label :key, "Nom de la donnée" %>
+      <%= f.text_field :key, class: "form-control", required: true %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :value, "Valeur" %>
+      <%= f.text_field :value, class: "form-control", required: true %>
+    </div>
+    <%= f.submit "Ajouter", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <p class="text-muted">Seuls les utilisateurs avancés ou admin peuvent ajouter des données.</p>
+<% end %>
+
+
 

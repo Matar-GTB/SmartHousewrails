@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "device_data/create"
+  get "device_data/destroy"
   # Active les routes Devise pour User, ce qui va générer notamment :
   # new_user_registration_path, new_user_session_path, etc.
   devise_for :users
@@ -8,6 +10,7 @@ Rails.application.routes.draw do
       post :request_deletion
       patch :toggle  # ← Ajout ici !
     end
+    resources :device_data, only: [:create, :destroy]
   end
   
   

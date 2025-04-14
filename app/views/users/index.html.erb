@@ -24,8 +24,19 @@
         <td><%= "#{user.first_name} #{user.last_name}" if user.respond_to?(:first_name) %></td>
 
         <td>
-          <%= user.admin? ? "Admin" : user.advanced? ? "Avancé" : "Basique" %>
-        </td>
+  <%=
+    if user.admin?
+      "Admin"
+    elsif user.level == "expert"
+      "Expert"
+    elsif user.level == "avancé"
+      "Avancé"
+    else
+      "Simple"
+    end
+  %>
+</td>
+
         <td><%= l(user.created_at.to_date) %></td>
         <td>
           <% if user.approved? %>

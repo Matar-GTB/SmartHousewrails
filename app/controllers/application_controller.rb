@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
     # Ajouter 1 point à chaque connexion
   if resource.is_a?(User)
     resource.increment!(:points, 1)
+    resource.update_level!
   end
     resource.admin? ? admin_dashboard_path : root_path
   end

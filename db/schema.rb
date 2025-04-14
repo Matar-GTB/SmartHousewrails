@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_14_015037) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_14_110828) do
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+  end
+
+  create_table "device_data", force: :cascade do |t|
+    t.integer "device_id", null: false
+    t.string "key"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_device_data_on_device_id"
   end
 
   create_table "devices", force: :cascade do |t|
@@ -57,6 +66,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_015037) do
 #   Unknown type 'inet' for column 'current_sign_in_ip'
 
 
+  add_foreign_key "device_data", "devices"
   add_foreign_key "devices", "categories"
   add_foreign_key "devices", "users"
   add_foreign_key "services", "categories"

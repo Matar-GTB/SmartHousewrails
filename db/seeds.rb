@@ -6,4 +6,11 @@
 #
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
+
 #   end
+device = Device.find_by(name: "Thermostat intelligent")
+
+device.device_data.create!(key: "Température actuelle", value: "21°C")
+device.device_data.create!(key: "Température cible", value: "23°C")
+device.device_data.create!(key: "Mode", value: "Automatique")
+

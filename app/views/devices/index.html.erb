@@ -16,6 +16,10 @@
 <% end %>
 
 <h2>Objets connectés</h2>
+<% if current_user && (current_user.admin? || current_user.advanced?) %>
+  <%= link_to "Ajouter un objet connecté", new_device_path, class: "btn btn-primary mb-3" %>
+<% end %>
+
 <p><%= @devices.count %> objet(s) trouvé(s).</p>
 
 <% @devices.each do |device| %>
