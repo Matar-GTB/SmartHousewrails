@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_14_110828) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_14_163734) do
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_110828) do
     t.boolean "status", default: true
     t.string "location"
     t.integer "category_id"
+    t.string "unique_id"
     t.index ["category_id"], name: "index_devices_on_category_id"
     t.index ["user_id"], name: "index_devices_on_user_id"
   end
@@ -62,6 +63,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_110828) do
     t.index ["user_id"], name: "index_smart_services_on_user_id"
   end
 
+  create_table "usage_reports", force: :cascade do |t|
+    t.integer "device_id", null: false
+    t.string "period"
+    t.text "data"
+    t.datetime "generated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_usage_reports_on_device_id"
+  end
+
 # Could not dump table "users" because of following StandardError
 #   Unknown type 'inet' for column 'current_sign_in_ip'
 
@@ -73,4 +84,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_110828) do
   add_foreign_key "services", "users"
   add_foreign_key "smart_services", "categories"
   add_foreign_key "smart_services", "users"
+  add_foreign_key "usage_reports", "devices"
 end

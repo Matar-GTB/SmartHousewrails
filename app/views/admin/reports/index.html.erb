@@ -1,0 +1,29 @@
+<h2>Statistiques </h2>
+<ul>
+  <li>Objets connectés : <%= @stats[:total_devices] %></li>
+  <li>Utilisateurs : <%= @stats[:total_users] %></li>
+  <li>Données enregistrées : <%= @stats[:total_data_points] %></li>
+  <li>Objet le plus actif : <%= @stats[:most_active_device]&.name || "-" %></li>
+</ul>
+
+<h3>Rapports générés</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Objet</th>
+      <th>Période</th>
+      <th>Date</th>
+      <th>Données</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.device.name %></td>
+        <td><%= report.period %></td>
+        <td><%= l(report.generated_at) %></td>
+        <td><%= report.data %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

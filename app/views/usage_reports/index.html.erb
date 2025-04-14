@@ -1,0 +1,33 @@
+<h1 class="mb-4">Rapport personnel</h1>
+
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card text-white bg-primary shadow">
+      <div class="card-body">
+        <h5 class="card-title">Objets que vous gérez</h5>
+        <p class="card-text display-6"><%= @user_devices.count %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card text-white bg-success shadow">
+      <div class="card-body">
+        <h5 class="card-title">Données collectées</h5>
+        <p class="card-text display-6"><%= @total_data_points %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @most_active_device %>
+  <div class="card bg-light border-dark shadow-sm mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Objet le plus actif</h5>
+      <p class="card-text">
+        <strong><%= @most_active_device.name %></strong> avec 
+        <%= @most_active_device.device_data.count %> donnée(s) collectée(s).
+      </p>
+    </div>
+  </div>
+<% end %>

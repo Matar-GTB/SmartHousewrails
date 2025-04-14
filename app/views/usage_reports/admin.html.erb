@@ -1,0 +1,75 @@
+<h1 class="mb-4">Rapport global de la plateforme</h1>
+
+<div class="row mb-4">
+  <!-- Utilisateurs inscrits -->
+  <div class="col-md-3">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-header">Utilisateurs inscrits</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @total_users %></h5>
+        <p class="card-text">Total des utilisateurs enregistrés sur la plateforme.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objets connectés -->
+  <div class="col-md-3">
+    <div class="card text-white bg-success mb-3">
+      <div class="card-header">Objets connectés</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @total_devices %></h5>
+        <p class="card-text">Nombre total d’objets connectés créés.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Données collectées -->
+  <div class="col-md-3">
+    <div class="card text-white bg-info mb-3">
+      <div class="card-header">Données collectées</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @total_data_points %></h5>
+        <p class="card-text">Toutes les données collectées par les objets.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consommation énergétique -->
+  <div class="col-md-3">
+    <div class="card text-dark bg-warning mb-3">
+      <div class="card-header">Consommation énergétique</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= number_with_precision(@total_energy, precision: 2) %> kWh</h5>
+        <p class="card-text">Consommation totale mesurée sur la plateforme.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<h3 class="mt-5">Données récentes</h3>
+<% if @recent_data.any? %>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Objet</th>
+        <th>Donnée</th>
+        <th>Valeur</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @recent_data.each do |data| %>
+        <tr>
+          <td><%= data.device.name %></td>
+          <td><%= data.key %></td>
+          <td><%= data.value %></td>
+          <td><%= l(data.created_at, format: :short) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="text-muted">Aucune donnée récente disponible.</p>
+<% end %>

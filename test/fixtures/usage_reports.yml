@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  device: one
+  period: MyString
+  data: MyText
+  generated_at: 2025-04-14 16:19:14
+
+two:
+  device: two
+  period: MyString
+  data: MyText
+  generated_at: 2025-04-14 16:19:14

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       post :request_deletion
       patch :toggle  # ← Ajout ici !
     end
-    resources :device_data, only: [:create, :destroy]
+    resources :device_data, only: [:create, :update, :destroy]
   end
   
   
@@ -31,7 +31,14 @@ Rails.application.routes.draw do
     resources :categories
     resources :users, only: [:index, :edit, :update, :destroy]
     get '/' => 'dashboard#index', as: :dashboard
+    get 'reports', to: 'reports#index', as: :reports
   end  # fin du namespace admin
+  resources :usage_reports, only: [:index] do
+    collection do
+      get :admin
+    end
+  end
+  
 
 
 end

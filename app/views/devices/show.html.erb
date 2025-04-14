@@ -1,12 +1,12 @@
 <h1><%= @device.name %></h1>
+<p><strong>ID unique :</strong> <%= @device.unique_id %></p>
+
 
 <p><strong>Description :</strong> <%= @device.description %></p>
 <p><strong>Ajouté le :</strong> <%= l(@device.created_at, format: :long) %></p>
 <p><strong>Statut :</strong> <%= @device.status ? "Actif" : "Inactif" %></p>
 <p><strong>Localisation :</strong> <%= @device.location.presence || "-" %></p>
 <p><strong>Catégorie :</strong> <%= @device.category&.name || "-" %></p>
-
-
 
 <%= link_to 'Retour à la liste', devices_path, class: "btn btn-light me-2" %>
 
@@ -15,28 +15,62 @@
 <% end %>
 
 <% if current_user.admin? %>
-  <%= link_to 'Supprimer', device_path(@device),
-        data: { turbo_method: :delete, confirm: 'Confirmer la suppression ?' },
+  <%= button_to 'Supprimer', device_path(@device),
+        method: :delete,
+        data: { confirm: 'Confirmer la suppression ?' },
         class: "btn btn-danger" %>
 <% end %>
+
+
 <p>
   <strong>Suppression demandée :</strong>
   <%= @device.deletion_requested? ? "Oui" : "Non" %>
 </p>
-<h3>Données techniques :</h3>
+
+<hr>
+
+<h3>Données techniques</h3>
+
 <% if @device.device_data.any? %>
-  <ul>
+  <ul class="list-group mb-3">
     <% @device.device_data.each do |data| %>
-      <li><strong><%= data.key %> :</strong> <%= data.value %></li>
+      <li class="list-group-item">
+        <% if current_user && (current_user.admin? || current_user.advanced?) %>
+          <div class="row align-items-center">
+            <div class="col-md-4">
+              <%= form_with model: [@device, data], local: true do |f| %>
+                <%= f.text_field :key, class: "form-control", placeholder: "Nom" %>
+            </div>
+            <div class="col-md-4">
+                <%= f.text_field :value, class: "form-control", placeholder: "Valeur" %>
+            </div>
+            <div class="col-md-2">
+                <%= f.submit "Modifier", class: "btn btn-sm btn-primary" %>
+              <% end %>
+            </div>
+            <div class="col-md-2">
+  <%= button_to "Supprimer", device_device_datum_path(@device, data), 
+        method: :delete, 
+        data: { confirm: "Supprimer cette donnée ?" }, 
+        class: "btn btn-sm btn-danger" %>
+</div>
+
+      
+            </div>
+          </div>
+        <% else %>
+          <strong><%= data.key %> :</strong> <%= data.value %>
+        <% end %>
+      </li>
     <% end %>
   </ul>
-  <% else %>
+<% else %>
   <p class="text-muted">Aucune donnée disponible.</p>
 <% end %>
 
-<h3>Ajouter une donnée</h3>
-
-<% if current_user && (current_user.advanced? || current_user.admin?) %>
+<!-- 🟢 Formulaire d'ajout TOUJOURS visible -->
+<h4>Ajouter une donnée</h4>
+<% if current_user && (current_user.admin? || current_user.advanced?) %>
   <%= form_with model: [@device, DeviceDatum.new], local: true do |f| %>
     <div class="mb-3">
       <%= f.label :key, "Nom de la donnée" %>
@@ -46,11 +80,8 @@
       <%= f.label :value, "Valeur" %>
       <%= f.text_field :value, class: "form-control", required: true %>
     </div>
-    <%= f.submit "Ajouter", class: "btn btn-primary" %>
+    <%= f.submit "Ajouter", class: "btn btn-success" %>
   <% end %>
 <% else %>
   <p class="text-muted">Seuls les utilisateurs avancés ou admin peuvent ajouter des données.</p>
 <% end %>
-
-
-
