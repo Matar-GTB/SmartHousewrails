@@ -23,13 +23,13 @@ class ServicesController < ApplicationController
       @service = Service.new(service_params)
       @service.user = current_user
       if @service.save
-        current_user.increment!(:points, 10)   # éventuellement, récompense ajout service
+        current_user.increment!(:points, 10)   
         redirect_to @service, notice: "Service créé."
       else
         render :new, status: :unprocessable_entity
       end
     end
-    # ... edit, update, destroy semblables à DevicesController ...
+    
     private 
       def service_params
         params.require(:service).permit(:name, :description)

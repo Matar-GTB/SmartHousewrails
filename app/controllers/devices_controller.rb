@@ -3,7 +3,7 @@ class DevicesController < ApplicationController
   before_action :require_advanced, only: %i[new create edit update]
   before_action :require_admin, only: %i[destroy]
 
-  # GET /devices
+  
   def index
     @devices = Device.all
 
@@ -17,7 +17,7 @@ class DevicesController < ApplicationController
     end
   end
 
-  # GET /devices/1
+  
   def show
     if current_user&.advanced?
       current_user.increment!(:points, 2)
@@ -25,15 +25,14 @@ class DevicesController < ApplicationController
     end
   end
 
-  # GET /devices/new
+  
   def new
     @device = Device.new
   end
 
-  # GET /devices/1/edit
+  
   def edit; end
 
-  # POST /devices
   def create
     @device = Device.new(device_params)
     @device.user = current_user
@@ -47,7 +46,7 @@ class DevicesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /devices/1
+  
   def update
     if @device.update(device_params)
       unless params[:device].keys == ["status"] || current_user.admin?

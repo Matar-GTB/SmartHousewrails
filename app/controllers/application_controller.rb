@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
   
 
-  # Redirections après connexion/déconnexion (personnalisables)
+  # Redirections après connexion/déconnexion 
   def after_sign_in_path_for(resource)
     # Ajouter 1 point à chaque connexion
   if resource.is_a?(User)

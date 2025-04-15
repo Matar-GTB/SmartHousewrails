@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :devices do
     member do
       post :request_deletion
-      patch :toggle  # ← Ajout ici !
+      patch :toggle  
     end
     resources :device_data, only: [:create, :update, :destroy]
   end
